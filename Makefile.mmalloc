@@ -1,0 +1,21 @@
+
+HEADERS = malloc.h ../include/mymspace.h
+OBJS = malloc.o
+CFLAGS = -g -O3 -ansi -Wall -Wextra -pedantic -fPIC
+CFLAGS += -I. -I../include
+
+libmmalloc.so: $(OBJS) $(HEADERS)
+	$(CC) -shared $(CFLAGS) $(OBJS) -o libmmalloc.so
+
+libdlmalloc.a: $(OBJS)
+	ar cs libmmalloc.a $(OBJS)
+
+
+clean:
+	rm -f libmmalloc.a
+	rm -f libmmalloc.so
+	rm -f *.o
+
+clean-all: clean
+	rm -f malloc.c
+	rm -f malloc.h

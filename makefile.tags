@@ -1,0 +1,21 @@
+# INPUT Variables:
+#  ALL_SRCIDR : list of directories with relative path from current dir.
+
+CTAGSO = cscope.files cscope.in.out cscope.out cscope.po.out tags
+
+cscope.files : 
+	@find $(ALL_SRCDIR) -type f -name \*.[hc] | sort -u > cscope.files
+
+CTAGSF := --extra=+fq
+CTAGSF += --fields=+tfzs
+CTAGSF += --file-scope=yes
+
+tags : cscope.files cscope
+	@ctags $(CTAGSF) -L cscope.files
+
+cscope: cscope.files
+	@cscope -b -q -k
+
+clean-tags:
+	@rm -rf $(CTAGSO)
+
